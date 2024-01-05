@@ -24,6 +24,465 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <h4 class="page-title">Scholar Access</h4>
+      <div class="profile">
+        <input type="" placeholder="Search..." id="user-search" />
+        <i class="bx bx-search"></i>
+        <div class="dropdown">
+          <a
+            class="btn btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              class="profile-image"
+              src="../image-source/student-icon.png"
+              alt=""
+            />
+            Scholar Tab
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="user-scholar-status.html"
+                >Scholar Status</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="../index.html">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <input type="checkbox" id="toggle" />
+    <label for="toggle" class="side-toggle"><i class="bx bx-menu"></i></label>
+
+    <div class="sidebar">
+      <div class="sidebar-content">
+        <ul class="lists">
+          <li class="list">
+            <a class="nav-link" id="dashboardlink">
+              <i class="bx bxs-dashboard icon"></i>
+              <span class="link">Dashboard</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="ScholarStatuslink">
+              <i class="bx bxs-user-account icon"></i>
+              <span class="link">Scholar Status</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="notificationLink">
+              <i class="bx bx-notification icon"></i>
+              <span class="link">Notifications</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="BrowseServicelink">
+              <i class="bx bx-category icon"></i>
+              <span class="link">Browse Service</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="ConnectAdminlink">
+              <i class="bx bx-message-edit icon"></i>
+              <span class="link">Connect Admin</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="UploadAttachmentslink">
+              <i class="bx bx-upload icon"></i>
+              <span class="link">Upload Attachments</span>
+            </a>
+          </li>
+          <li class="list">
+            <a class="nav-link" id="DownlaodCSRlink">
+              <i class="bx bxs-download icon"></i>
+              <span class="link">Download CSR</span>
+            </a>
+          </li>
+        </ul>
+        <div class="bottom-content">
+          <li class="list-bottom">
+            <a href="../index.html" class="nav-link">
+              <i class="bx bx-log-out icon"></i>
+              <span class="link">Logout</span>
+            </a>
+          </li>
+        </div>
+      </div>
+    </div>
+
+    <main class="mt-5 pt-3">
+      <p class="user-page-title">Scholar Status</p>
+      <nav aria-label="breadcrumb" style="margin-left: 10px">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Dashboard</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Scholar Status
+          </li>
+        </ol>
+      </nav>
+
+      <div class="row" style="margin-left: 15px; margin-top: 20px">
+        <div class="card" style="width: 24rem; margin-right: 20px">
+          <img
+            src="/image-source/sample-avatar.jpg"
+            id="profilePic"
+            class="card-img-top-status"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title user-full-name" id="fullname">Loading</h5>
+            <p class="card-text">
+              Make sure to verify all the details specified in the dashboard
+            </p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" id="yearLevelS2">Loading</li>
+            <li class="list-group-item" id="programS2">Loading</li>
+          </ul>
+        </div>
+        <div
+          class="card"
+          style="width: 40rem; margin-top: 18px; display: inline"
+        >
+          <div class="card-header">My Scholar Information</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Status:
+              <span
+                class="user-profile-decorate user-scholar-status"
+                id="statusS"
+                >Loading</span
+              >
+            </li>
+            <li class="list-group-item">
+              School Year:
+              <span
+                class="user-profile-decorate user-scholar-acadyear"
+                id="schoolyearS"
+                >Loading</span
+              >
+            </li>
+
+            <li class="list-group-item">
+              First Name:
+              <span
+                class="user-profile-decorate user-scholar-firstname"
+                id="firstNameS"
+                >Loading</span
+              >
+            </li>
+
+            <li class="list-group-item">
+              Middle Name:
+              <span
+                class="user-profile-decorate user-scholar-midname"
+                id="middlenameS"
+                >Loading</span
+              >
+            </li>
+            <li class="list-group-item">
+              Last Name:
+              <span
+                class="user-profile-decorate user-scholar-lastname"
+                id="lasnameS"
+                >Loading</span
+              >
+            </li>
+            <li class="list-group-item">
+              School:
+              <span
+                class="user-profile-decorate user-scholar-school"
+                id="schoolS"
+                >Loading</span
+              >
+            </li>
+            <li class="list-group-item">
+              Program:
+              <span
+                class="user-profile-decorate user-scholar-program"
+                id="programS"
+                >Loading</span
+              >
+            </li>
+            <li class="list-group-item">
+              Year Level:
+              <span
+                class="user-profile-decorate user-scholar-yearlevel"
+                id="yearLevelS"
+                >Loading</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row" style="margin-left: 5px; margin-top: 20px">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title scholarStatus-LowerTitle">
+                Upload your Requirements
+              </h5>
+              <p class="card-text">
+                Prepare the neccesary documents for renewal
+              </p>
+              <a
+                id="UploadAttachmentslink2"
+                class="btn btn-primary scholarNavigatebtn"
+                >Visit Upload Page</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title scholarStatus-LowerTitle">
+                Download your Certificate
+              </h5>
+              <p class="card-text">
+                Download the Certificate as a proof for enrollment
+              </p>
+              <a
+                id="DownlaodCSRlink2"
+                class="btn btn-primary scholarNavigatebtn"
+                >Visit Download CSR Page</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title scholarStatus-LowerTitle">
+                Change Your Password
+              </h5>
+              <p class="card-text">
+                Stay secure: Click here to update your password!
+              </p>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#changePasswordModal"
+                style="background-color: #0e2b63"
+              >
+                <i class="bx bx-cog"></i> Change Password
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title scholarStatus-LowerTitle">
+                Upload New Profile Picture
+              </h5>
+              <p class="card-text">Click Here to Change your Profile Picture</p>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#changeProfilePictureModal"
+                style="background-color: #0e2b63"
+              >
+                <i class="bx bxs-file-image"></i> Upload Image
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Spinner -->
+    <div id="spinner" class="spinner"></div>
+
+    <!-- Success Notification -->
+    <div id="successNotification" class="success-notification">
+      <span style="margin-right: 5px">File uploaded successfully</span>
+      <i class="bx bx-check-circle" style="color: #5cb85c"></i>
+      <!-- Checkmark icon -->
+    </div>
+
+    <!-- Modal for Upload Profile Picture -->
+    <div
+      class="modal fade"
+      id="changeProfilePictureModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Upload Profile Picture
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="profilePicture" class="form-label"
+                >Upload Profile Picture</label
+              >
+              <input
+                class="form-control"
+                type="file"
+                id="profilePictureInput"
+                onchange="chooseFile('profile')"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Change Password -->
+    <div
+      class="modal fade"
+      id="changePasswordModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              <i class="bx bx-cog"></i> Change Password
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating">
+              <input
+                type="password"
+                class="form-control"
+                id="floatingPasswordCurrent"
+                placeholder="Password"
+              />
+              <label for="floatingPassword">Current Password</label>
+            </div>
+          </div>
+          <p class="h6" style="margin: 5px 0px 10px 15px">
+            Safeguarding your access: Remember your password, or for assistance,
+            kindly reach our support team at
+            <a href="http://cdocityscholarshipsoffice@gmail.com" target="_blank"
+              >cdocityscholarshipsoffice@gmail.com</a
+            >
+          </p>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="changePasswordButton"
+            >
+              Change
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null
+          ? ""
+          : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      var userId = getUrlParameter("uid");
+
+      var notificationLink = document.getElementById("notificationLink");
+      var dashboardlink = document.getElementById("dashboardlink");
+      var BrowseServicelink = document.getElementById("BrowseServicelink");
+      var ScholarStatuslink = document.getElementById("ScholarStatuslink");
+      var ConnectAdminlink = document.getElementById("ConnectAdminlink");
+      var UploadAttachmentslink = document.getElementById(
+        "UploadAttachmentslink"
+      );
+      var UploadAttachmentslink1 = document.getElementById(
+        "UploadAttachmentslink2"
+      );
+      var DownlaodCSRlink = document.getElementById("DownlaodCSRlink");
+      var DownlaodCSRlink1 = document.getElementById("DownlaodCSRlink2");
+      var ViewRenderedServiceslink = document.getElementById(
+        "ViewRenderedServiceslink"
+      );
+
+      if (userId && ScholarStatuslink) {
+        ScholarStatuslink.href = "user-scholar-status.html?uid=" + userId;
+      }
+      if (userId && notificationLink) {
+        notificationLink.href = "user-notification.html?uid=" + userId;
+      }
+      if (userId && dashboardlink) {
+        dashboardlink.href = "user-dashboard-main.html?uid=" + userId;
+      }
+      if (userId && BrowseServicelink) {
+        BrowseServicelink.href = "user-browse-service.html?uid=" + userId;
+      }
+      if (userId && ConnectAdminlink) {
+        ConnectAdminlink.href = "user-connect-admin.html?uid=" + userId;
+      }
+      if (userId && UploadAttachmentslink && UploadAttachmentslink1) {
+        UploadAttachmentslink.href =
+          "user-upload-attachments.html?uid=" + userId;
+        UploadAttachmentslink1.href =
+          "user-upload-attachments.html?uid=" + userId;
+      }
+      if (userId && DownlaodCSRlink && DownlaodCSRlink1) {
+        DownlaodCSRlink.href = "user-download.html?uid=" + userId;
+        DownlaodCSRlink1.href = "user-download.html?uid=" + userId;
+      }
+      if (userId && ViewRenderedServiceslink) {
+        ViewRenderedServiceslink.href =
+          "user-view-rendered-services.html?uid=" + userId;
+      }
+    </script>
 
     <script type="module">
       // Import the necessary Firebase functions
@@ -250,385 +709,79 @@
             throw error; // Throw an error for error handling
           });
       }
-    </script>
-  </head>
-  <body>
-    <nav class="navbar">
-      <h4 class="page-title">Scholar Access</h4>
-      <div class="profile">
-        <input type="" placeholder="Search..." id="user-search" />
-        <i class="bx bx-search"></i>
-        <div class="dropdown">
-          <a
-            class="btn btn-secondary dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              class="profile-image"
-              src="../image-source/student-icon.png"
-              alt=""
-            />
-            Scholar Tab
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="user-scholar-status.html"
-                >Scholar Status</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="../index.html">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
-    <input type="checkbox" id="toggle" />
-    <label for="toggle" class="side-toggle"><i class="bx bx-menu"></i></label>
+      function chooseFile(type) {
+        const fileInput = document.getElementById(
+          type === "profile"
+            ? "profilePictureInput"
+            : type === "grades"
+            ? "formFileGrades"
+            : "formFileServices"
+        );
+        const file = fileInput.files[0];
 
-    <div class="sidebar">
-      <div class="sidebar-content">
-        <ul class="lists">
-          <li class="list">
-            <a class="nav-link" id="dashboardlink">
-              <i class="bx bxs-dashboard icon"></i>
-              <span class="link">Dashboard</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="ScholarStatuslink">
-              <i class="bx bxs-user-account icon"></i>
-              <span class="link">Scholar Status</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="notificationLink">
-              <i class="bx bx-notification icon"></i>
-              <span class="link">Notifications</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="BrowseServicelink">
-              <i class="bx bx-category icon"></i>
-              <span class="link">Browse Service</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="ConnectAdminlink">
-              <i class="bx bx-message-edit icon"></i>
-              <span class="link">Connect Admin</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="UploadAttachmentslink">
-              <i class="bx bx-upload icon"></i>
-              <span class="link">Upload Attachments</span>
-            </a>
-          </li>
-          <li class="list">
-            <a class="nav-link" id="DownlaodCSRlink">
-              <i class="bx bxs-download icon"></i>
-              <span class="link">Downlaod CSR</span>
-            </a>
-          </li>
-        </ul>
-        <div class="bottom-content">
-          <li class="list-bottom">
-            <a href="../index.html" class="nav-link">
-              <i class="bx bx-log-out icon"></i>
-              <span class="link">Logout</span>
-            </a>
-          </li>
-        </div>
-      </div>
-    </div>
+        if (file) {
+          const userId = getUserId();
+          const folderName =
+            type === "grades"
+              ? "complete_grades"
+              : type === "services"
+              ? "rendered_services"
+              : "imageprofile";
+          const storageRef = ref(
+            storage,
+            `Users/${userId}/${folderName}/${file.name}`
+          );
 
-    <main class="mt-5 pt-3">
-      <p class="user-page-title">Scholar Status</p>
-      <nav aria-label="breadcrumb" style="margin-left: 10px">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">Dashboard</li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Scholar Status
-          </li>
-        </ol>
-      </nav>
+          const spinner = document.getElementById("spinner");
+          spinner.style.display = "block"; // Show the spinner
 
-      <div class="row" style="margin-left: 15px; margin-top: 20px">
-        <div class="card" style="width: 24rem; margin-right: 20px">
-          <img
-            src="/image-source/sample-avatar.jpg"
-            id="profilePic"
-            class="card-img-top-status"
-            alt="..."
-          />
-          <div class="card-body">
-            <h5 class="card-title user-full-name" id="fullname">Loading</h5>
-            <p class="card-text">
-              Make sure to verify all the details specified in the dashboard
-            </p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="yearLevelS2">Loading</li>
-            <li class="list-group-item" id="programS2">Loading</li>
-          </ul>
-        </div>
-        <div
-          class="card"
-          style="width: 40rem; margin-top: 18px; display: inline"
-        >
-          <div class="card-header">My Scholar Information</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              Status:
-              <span
-                class="user-profile-decorate user-scholar-status"
-                id="statusS"
-                >Loading</span
-              >
-            </li>
-            <li class="list-group-item">
-              School Year:
-              <span
-                class="user-profile-decorate user-scholar-acadyear"
-                id="schoolyearS"
-                >Loading</span
-              >
-            </li>
+          uploadBytes(storageRef, file)
+            .then((snapshot) => {
+              spinner.style.display = "none"; // Hide the spinner
+              const successNotification = document.getElementById(
+                "successNotification"
+              );
+              successNotification.style.display = "flex"; // Show success notification
+              setTimeout(() => {
+                successNotification.style.display = "none"; // Hide success notification after 2 seconds
+              }, 2000);
 
-            <li class="list-group-item">
-              First Name:
-              <span
-                class="user-profile-decorate user-scholar-firstname"
-                id="firstNameS"
-                >Loading</span
-              >
-            </li>
-
-            <li class="list-group-item">
-              Middle Name:
-              <span
-                class="user-profile-decorate user-scholar-midname"
-                id="middlenameS"
-                >Loading</span
-              >
-            </li>
-            <li class="list-group-item">
-              Last Name:
-              <span
-                class="user-profile-decorate user-scholar-lastname"
-                id="lasnameS"
-                >Loading</span
-              >
-            </li>
-            <li class="list-group-item">
-              School:
-              <span
-                class="user-profile-decorate user-scholar-school"
-                id="schoolS"
-                >Loading</span
-              >
-            </li>
-            <li class="list-group-item">
-              Program:
-              <span
-                class="user-profile-decorate user-scholar-program"
-                id="programS"
-                >Loading</span
-              >
-            </li>
-            <li class="list-group-item">
-              Year Level:
-              <span
-                class="user-profile-decorate user-scholar-yearlevel"
-                id="yearLevelS"
-                >Loading</span
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="row" style="margin-left: 5px; margin-top: 20px">
-        <div class="col-sm-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title scholarStatus-LowerTitle">
-                Upload your Requirements
-              </h5>
-              <p class="card-text">
-                Prepare the neccesary documents for renewal
-              </p>
-              <a
-                id="UploadAttachmentslink2"
-                class="btn btn-primary scholarNavigatebtn"
-                >Visit Upload Page</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title scholarStatus-LowerTitle">
-                Download your Certificate
-              </h5>
-              <p class="card-text">
-                Download the Certificate as a proof for enrollment
-              </p>
-              <a
-                id="DownlaodCSRlink2"
-                class="btn btn-primary scholarNavigatebtn"
-                >Visit Download CSR Page</a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title scholarStatus-LowerTitle">
-                Change Your Password
-              </h5>
-              <p class="card-text">
-                Stay secure: Click here to update your password!
-              </p>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#changePasswordModal"
-                style="background-color: #0e2b63"
-              >
-                <i class="bx bx-cog"></i> Change Password
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Modal for Change Password -->
-    <div
-      class="modal fade"
-      id="changePasswordModal"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              <i class="bx bx-cog"></i> Change Password
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-floating">
-              <input
-                type="password"
-                class="form-control"
-                id="floatingPasswordCurrent"
-                placeholder="Password"
-              />
-              <label for="floatingPassword">Current Password</label>
-            </div>
-          </div>
-          <p class="h6" style="margin: 5px 0px 10px 15px">
-            Safeguarding your access: Remember your password, or for assistance,
-            kindly reach our support team at
-            <a href="http://cdocityscholarshipsoffice@gmail.com" target="_blank"
-              >cdocityscholarshipsoffice@gmail.com</a
-            >
-          </p>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="changePasswordButton"
-            >
-              Change
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function getUrlParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-          ? ""
-          : decodeURIComponent(results[1].replace(/\+/g, " "));
+              console.log(`File (${type}) uploaded successfully`);
+              if (type === "profile") {
+                console.log("Profile picture uploaded successfully");
+              }
+              // You can get the download URL of the uploaded file here if needed
+            })
+            .catch((error) => {
+              spinner.style.display = "none"; // Hide the spinner on error
+              console.error(`Error uploading file (${type}):`, error);
+            });
+        } else {
+          console.error(`No file selected for (${type})`);
+        }
       }
-      var userId = getUrlParameter("uid");
 
-      var notificationLink = document.getElementById("notificationLink");
-      var dashboardlink = document.getElementById("dashboardlink");
-      var BrowseServicelink = document.getElementById("BrowseServicelink");
-      var ScholarStatuslink = document.getElementById("ScholarStatuslink");
-      var ConnectAdminlink = document.getElementById("ConnectAdminlink");
-      var UploadAttachmentslink = document.getElementById(
-        "UploadAttachmentslink"
-      );
-      var UploadAttachmentslink1 = document.getElementById(
-        "UploadAttachmentslink2"
-      );
-      var DownlaodCSRlink = document.getElementById("DownlaodCSRlink");
-      var DownlaodCSRlink1 = document.getElementById("DownlaodCSRlink2");
-      var ViewRenderedServiceslink = document.getElementById(
-        "ViewRenderedServiceslink"
-      );
+      // Event listener for the file input change
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach((fileInput) => {
+        fileInput.addEventListener("change", (event) => {
+          const fileType =
+            event.target.id === "formFileGrades"
+              ? "grades"
+              : event.target.id === "formFileServices"
+              ? "services"
+              : "profile";
+          chooseFile(fileType);
+        });
+      });
 
-      if (userId && ScholarStatuslink) {
-        ScholarStatuslink.href = "user-scholar-status.html?uid=" + userId;
-      }
-      if (userId && notificationLink) {
-        notificationLink.href = "user-notification.html?uid=" + userId;
-      }
-      if (userId && dashboardlink) {
-        dashboardlink.href = "user-dashboard-main.html?uid=" + userId;
-      }
-      if (userId && BrowseServicelink) {
-        BrowseServicelink.href = "user-browse-service.html?uid=" + userId;
-      }
-      if (userId && ConnectAdminlink) {
-        ConnectAdminlink.href = "user-connect-admin.html?uid=" + userId;
-      }
-      if (userId && UploadAttachmentslink && UploadAttachmentslink1) {
-        UploadAttachmentslink.href =
-          "user-upload-attachments.html?uid=" + userId;
-        UploadAttachmentslink1.href =
-          "user-upload-attachments.html?uid=" + userId;
-      }
-      if (userId && DownlaodCSRlink && DownlaodCSRlink1) {
-        DownlaodCSRlink.href = "user-download.html?uid=" + userId;
-        DownlaodCSRlink1.href = "user-download.html?uid=" + userId;
-      }
-      if (userId && ViewRenderedServiceslink) {
-        ViewRenderedServiceslink.href =
-          "user-view-rendered-services.html?uid=" + userId;
+      // Function to retrieve the user's UID (replace this with your actual logic)
+      function getUserId() {
+        // Replace this with the logic to fetch the user's UID
+        // For example, if you have it in the URL parameter:
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("uid");
       }
     </script>
   </body>

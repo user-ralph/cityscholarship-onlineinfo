@@ -90,7 +90,7 @@
               >
             </li>
             <li>
-              <a class="dropdown-item" href="../home-page-user.html">Logout</a>
+              <a class="dropdown-item" href="../index.html">Logout</a>
             </li>
           </ul>
         </div>
@@ -142,13 +142,13 @@
           <li class="list">
             <a class="nav-link" id="DownlaodCSRlink">
               <i class="bx bxs-download icon"></i>
-              <span class="link">Downlaod CSR</span>
+              <span class="link">DownloadCSR</span>
             </a>
           </li>
         </ul>
         <div class="bottom-content">
           <li class="list-bottom">
-            <a href="../home-page-user.html?${userId}" class="nav-link">
+            <a href="../index.html" class="nav-link">
               <i class="bx bx-log-out icon"></i>
               <span class="link">Logout</span>
             </a>
@@ -234,16 +234,6 @@
             <div class="modal-body">
               <!-- Grades Section -->
               <div class="mb-4">
-                <h2 class="card-title user-upload-title">Grades</h2>
-                <button
-                  type="button"
-                  class="btn btn-primary mb-3"
-                  id="submitGradesBtn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#gradesInputModal"
-                >
-                  Submit Grades
-                </button>
                 <!-- Grades Input Modal -->
                 <div
                   class="modal fade"
@@ -719,19 +709,6 @@
                                 Add Subject
                               </button>
                               <!-- Overall GWA -->
-
-                              <!-- File Upload -->
-                              <div class="mb-3">
-                                <label for="formFileGrades" class="form-label"
-                                  >Add a Copy of Your Complete Grades</label
-                                >
-                                <input
-                                  class="form-control"
-                                  type="file"
-                                  id="formFileGrades"
-                                  onchange="chooseFile('grades')"
-                                />
-                              </div>
                             </div>
                           </div>
 
@@ -776,8 +753,6 @@
                     </div>
                   </div>
                 </div>
-
-                <p>Overall GWA: <span id="overallGWA">--</span></p>
               </div>
             </div>
 
@@ -793,18 +768,48 @@
               />
             </div>
 
+            <!-- File Upload -->
             <div class="mb-3">
-              <label for="profilePicture" class="form-label"
-                >Upload Profile Picture</label
+              <label for="formFileGrades" class="form-label"
+                >Add a Copy of Your Complete Grades</label
               >
               <input
                 class="form-control"
                 type="file"
-                id="profilePictureInput"
-                onchange="chooseFile('profile')"
+                id="formFileGrades"
+                onchange="chooseFile('grades')"
               />
             </div>
           </form>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 20px">
+        <div class="card-body">
+          <h5
+            class="card-title user-upload-title text-center mb-4"
+            style="border-bottom: 2px solid #ffb703"
+          >
+            General Weighted Average Calculator
+          </h5>
+
+          <div>
+            <h2 class="card-title user-upload-title">Grades</h2>
+            <button
+              type="button"
+              class="btn btn-primary mb-3"
+              id="submitGradesBtn"
+              data-bs-toggle="modal"
+              data-bs-target="#gradesInputModal"
+            >
+              Submit Grades
+            </button>
+
+            <p>Overall GWA: <span id="overallGWA">--</span></p>
+          </div>
+          Please be advised that the computed Grade Weighted Average (GWA)
+          serves solely as a reference for the scholarship renewal process. To
+          acquire the computed GWA, we recommend contacting your school
+          registrar for further assistance.
         </div>
       </div>
     </main>
@@ -1088,37 +1093,6 @@
           chooseFile(fileType);
         });
       });
-
-      function updateProfilePicture() {
-        const userId = getUserId(); // Replace this with your logic to get the user ID
-        const storageRef = ref(storage, `Users/${userId}/imageprofile`);
-
-        listAll(storageRef)
-          .then((res) => {
-            if (res.items.length > 0) {
-              // Sort items by their metadata (creation time)
-              const sortedItems = res.items.sort(
-                (a, b) => b.timeCreated - a.timeCreated
-              );
-
-              // Get the most recent item (first item after sorting)
-              const mostRecentItem = sortedItems[0];
-
-              // Fetch download URL for the most recent item
-              getDownloadURL(mostRecentItem).then((url) => {
-                const profilePic = document.getElementById("profilePic");
-                profilePic.src = url;
-              });
-            } else {
-              console.error("No images found in the folder");
-            }
-          })
-          .catch((error) => {
-            console.error("Error listing files:", error);
-          });
-      }
-      // Call the function to update the profile picture
-      updateProfilePicture();
 
       ////// Display Text for grade select
       const gradeSelect = document.getElementById("gradeSelect");

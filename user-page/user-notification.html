@@ -47,7 +47,7 @@
               >
             </li>
             <li>
-              <a class="dropdown-item" href="../home-page-user.html">Logout</a>
+              <a class="dropdown-item" href="../index.html">Logout</a>
             </li>
           </ul>
         </div>
@@ -99,13 +99,13 @@
           <li class="list">
             <a class="nav-link" id="DownlaodCSRlink">
               <i class="bx bxs-download icon"></i>
-              <span class="link">Downlaod CSR</span>
+              <span class="link">Download CSR</span>
             </a>
           </li>
         </ul>
         <div class="bottom-content">
           <li class="list-bottom">
-            <a href="../home-page-user.html?${userId}" class="nav-link">
+            <a href="../index.html" class="nav-link">
               <i class="bx bx-log-out icon"></i>
               <span class="link">Logout</span>
             </a>
@@ -311,6 +311,21 @@
         });
       });
 
+      // Function to format text content with line breaks and clickable links
+      function formatText(text) {
+        const formattedText = text
+          .split("\n")
+          .map((line) => {
+            if (line.match(/https?:\/\/[^\s]+/)) {
+              return `<p>${linkify(line)}</p>`;
+            }
+            return `<p>${line}</p>`;
+          })
+          .join("");
+
+        return formattedText;
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
         const database = getDatabase(app);
         const postsRef = ref(database, "postannouncements"); // Reference to the 'postannouncements' node in Firebase
@@ -321,24 +336,15 @@
 
           // Get the container where you want to display the posts
           const cardContainer = document.querySelector(".row-content");
-
-          // Function to format text content with line breaks and clickable links
-          function formatText(text) {
-            const formattedText = text
-              .split("\n")
-              .map((line) => {
-                if (line.match(/https?:\/\/[^\s]+/)) {
-                  return `<p>${linkify(line)}</p>`;
-                }
-                return `<p>${line}</p>`;
-              })
-              .join("");
-
-            return formattedText;
-          }
+          // Get the keys and sort them in descending order
+          const keys = Object.keys(posts).sort((a, b) => {
+            const numA = parseInt(a.replace("ann", ""));
+            const numB = parseInt(b.replace("ann", ""));
+            return numB - numA;
+          });
 
           // Loop through the posts
-          for (const key in posts) {
+          keys.forEach((key) => {
             const postData = posts[key]; // Retrieve individual post data
 
             // Create HTML elements dynamically and populate them with fetched data
@@ -384,7 +390,7 @@
             } else {
               console.error("cardContainer is null or undefined.");
             }
-          }
+          });
 
           function postPicture(number) {
             console.log("post picture number", number);
