@@ -138,7 +138,7 @@
       <nav class="row-content"></nav>
     </main>
 
-    <!-- Modal -->
+    <!-- Modal for Created Post-->
     <div
       class="modal fade"
       id="feedPostButton"
@@ -221,7 +221,50 @@
       </div>
     </div>
 
-    <!-- Create Announcements-->
+    <!-- Modal for Asking if it would deletes an item -->
+
+    <div
+      class="modal fade"
+      id="confirmToDelete"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Delete a Feed Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the post?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary confirmDLTBtnColor">
+              Yes, delete the Item
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Create Announcements-->
     <div
       class="modal fade"
       id="staticBackdrop-createrender"
@@ -286,6 +329,48 @@
               class="btn btn-primary admin-createbrowse-button"
             >
               Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Asking if it would deletes an item -->
+    <div
+      class="modal fade"
+      id="confirmToDelete"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Delete a Feed Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the post?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary confirmDLTBtnColor">
+              Yes, delete the Item
             </button>
           </div>
         </div>
@@ -370,6 +455,7 @@
               );
               location.reload();
               alert("Posted successfully");
+              window.location.reload();
             } catch (error) {
               console.error("Error writing document: ", error);
             }
@@ -379,9 +465,10 @@
         });
       });
 
+      /// DISPLAY
       document.addEventListener("DOMContentLoaded", function () {
         const database = getDatabase(app);
-        const postsRef = ref(database, "postannouncements"); // Reference to the 'postannouncements' node in Firebase
+        const postsRef = ref(database, "postannouncements");
 
         // Fetch data from Firebase
         onValue(postsRef, (snapshot) => {
@@ -390,23 +477,15 @@
           // Get the container where you want to display the posts
           const cardContainer = document.querySelector(".row-content");
 
-          // Function to format text content with line breaks and clickable links
-          function formatText(text) {
-            const formattedText = text
-              .split("\n")
-              .map((line) => {
-                if (line.match(/https?:\/\/[^\s]+/)) {
-                  return `<p>${linkify(line)}</p>`;
-                }
-                return `<p>${line}</p>`;
-              })
-              .join("");
+          // Get the keys and sort them in descending order
+          const keys = Object.keys(posts).sort((a, b) => {
+            const numA = parseInt(a.replace("ann", ""));
+            const numB = parseInt(b.replace("ann", ""));
+            return numB - numA;
+          });
 
-            return formattedText;
-          }
-
-          // Loop through the posts
-          for (const key in posts) {
+          // Loop through the sorted keys and retrieve the corresponding data
+          keys.forEach((key) => {
             const postData = posts[key]; // Retrieve individual post data
 
             // Create HTML elements dynamically and populate them with fetched data
@@ -415,26 +494,26 @@
 
             // Adding "Feed Post" block within the card
             newCard.innerHTML = `
-            <div class="card admin-notif-feed">
-              <h5 class="card-header admin-notifheader-feed">Feed Post</h5>
-              <div class="card-body">
-                <h5 class="card-title admin-notif-title-feed">${postData.title}</h5>
-                <p class="card-text">${postData.content}</p>
-                <button
-                  type="button"
-                  class="btn btn-primary admin-notif-btn-feed"
-                  data-bs-toggle="modal"
-                  data-bs-target="#feedPostButton"
-                  data-bs-content="${key}"
-                >
-                  View Details
-                </button>
-                <button type="button" class="btn btn-primary admin-button-delete-itemrendered" data-post-key="${key}" data-bs-toggle="modal" data-bs-target="#questionToDelete">
-                  <i class="bx bx-trash"></i> Delete Item
-                </button>
-              </div>
-            </div>
-          `;
+                <div class="card admin-notif-feed">
+                  <h5 class="card-header admin-notifheader-feed">Feed Post</h5>
+                  <div class="card-body">
+                    <h5 class="card-title admin-notif-title-feed">${postData.title}</h5>
+                    <p class="card-text">${postData.content}</p>
+                    <button
+                      type="button"
+                      class="btn btn-primary admin-notif-btn-feed"
+                      data-bs-toggle="modal"
+                      data-bs-target="#feedPostButton"
+                      data-bs-content="${key}"
+                    >
+                      View Details
+                    </button>
+                    <button type="button" class="btn btn-primary admin-button-delete-itemrendered" data-post-key="${key}" data-bs-toggle="modal" data-bs-target="#confirmToDelete">
+                      <i class="bx bx-trash"></i> Delete Item
+                  </button>
+                  </div>
+                </div>
+              `;
 
             // Append the newly created card to the card container
             cardContainer.appendChild(newCard);
@@ -457,21 +536,30 @@
             deleteButton.addEventListener("click", function () {
               const postKey = this.getAttribute("data-post-key");
 
-              // Reference to the specific post node you want to delete
-              const postRef = ref(database, `postannouncements/${postKey}`);
+              // Select the confirmation modal's 'Yes, delete' button
+              const confirmDeleteButton = document.querySelector(
+                ".confirmDLTBtnColor"
+              );
 
-              // Remove the post from the database
-              remove(postRef)
-                .then(() => {
-                  location.reload();
-                  alert(`Post deleted successfully.`);
-                  // Optionally, add code here for any additional actions after deletion
-                })
-                .catch((error) => {
-                  console.error(
-                    `Error deleting post ${postKey}: ${error.message}`
-                  );
-                });
+              // Add a click event listener to the confirmation button
+              confirmDeleteButton.addEventListener("click", function () {
+                // Reference to the specific post node you want to delete
+                const postRef = ref(database, `postannouncements/${postKey}`);
+
+                // Remove the post from the database
+                remove(postRef)
+                  .then(() => {
+                    location.reload();
+                    alert(`Post deleted successfully.`);
+                    window.location.reload();
+                    // Optionally, add code here for any additional actions after deletion
+                  })
+                  .catch((error) => {
+                    console.error(
+                      `Error deleting post ${postKey}: ${error.message}`
+                    );
+                  });
+              });
             });
 
             if (cardContainer) {
@@ -479,38 +567,7 @@
             } else {
               console.error("cardContainer is null or undefined.");
             }
-          }
-
-          function postPicture(number) {
-            console.log("post picture number", number);
-            const storageRef = dbRef(storage, `posts/${number}`);
-
-            listAll(storageRef)
-              .then((res) => {
-                if (res.items.length > 0) {
-                  // Sort items by their metadata (creation time)
-                  const sortedItems = res.items.sort(
-                    (a, b) => b.timeCreated - a.timeCreated
-                  );
-
-                  // Get the most recent item (first item after sorting)
-                  const mostRecentItem = sortedItems[0];
-
-                  // Fetch download URL for the most recent item
-                  getDownloadURL(mostRecentItem).then((url) => {
-                    const profilePic = document.getElementById(
-                      "rendered-image-reference-1"
-                    );
-                    profilePic.src = url;
-                  });
-                } else {
-                  console.error("No images found in the folder");
-                }
-              })
-              .catch((error) => {
-                console.error("Error listing files:", error);
-              });
-          }
+          });
         });
       });
 

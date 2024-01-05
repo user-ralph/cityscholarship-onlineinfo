@@ -75,7 +75,7 @@
           <li class="list">
             <a href="admin-notifications.html" class="nav-link">
               <i class="bx bx-notification icon"></i>
-              <span class="link">Announcements</span>
+              <span class="link">Notifications</span>
             </a>
           </li>
           <li class="list">
@@ -125,15 +125,16 @@
           class="btn btn-primary admin-browse-btn1"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop-createrender"
-          >
+        >
           <i class="bx bx-plus" style="font-size: 20px"></i> Create Rendered
           Service
         </button>
       </nav>
 
-      <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-left: 1px">
-        
-      </div>
+      <div
+        class="row row-cols-1 row-cols-md-3 g-4"
+        style="margin-left: 1px"
+      ></div>
 
       <!-- Modal -->
     </main>
@@ -155,9 +156,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5">
-              Rendered Service Opportunity
-            </h1>
+            <h1 class="modal-title fs-5">Rendered Service Opportunity</h1>
             <button
               type="button"
               class="btn-close"
@@ -198,7 +197,7 @@
                     alt="..."
                     id="rendered-image-reference-1"
                   />
-                </div>     
+                </div>
               </div>
               <button
                 class="carousel-control-prev"
@@ -228,14 +227,15 @@
           </div>
 
           <div class="card admin-rendered-content">
-            <div id="rendered-service-title" class="card-header admin-notif-contenttitle">
+            <div
+              id="rendered-service-title"
+              class="card-header admin-notif-contenttitle"
+            >
               Rendered Service Opportunity
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
-                <p id="rendered-service-content-text">
-                  ...
-                </p>
+                <p id="rendered-service-content-text">...</p>
               </blockquote>
             </div>
           </div>
@@ -260,12 +260,11 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
             >
-            Understood
+              Understood
             </button>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- For Create Post -->
@@ -316,7 +315,9 @@
                 />
               </div>
               <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-sm">When</span>
+                <span class="input-group-text" id="inputGroup-sizing-sm"
+                  >When</span
+                >
                 <input
                   type="datetime-local"
                   id="renderedService-when1"
@@ -328,7 +329,10 @@
               <p id="formattedDateTime"></p>
 
               <div class="mb-3">
-                <label for="exampleFormControlTextarea1" id="rendered-service-content-text" class="form-label"
+                <label
+                  for="exampleFormControlTextarea1"
+                  id="rendered-service-content-text"
+                  class="form-label"
                   >Write Your Content Here</label
                 >
                 <textarea
@@ -337,10 +341,17 @@
                   rows="3"
                 ></textarea>
                 <div class="mb-3">
-                  <label for="formFileSm" class="form-label">Upload Pictures</label>
-                  <input class="form-control" type="file" id="renderservicefile" onchange="chooseFile('postpic', postCount)" />
+                  <label for="formFileSm" class="form-label"
+                    >Upload Pictures</label
+                  >
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="renderservicefile"
+                    onchange="chooseFile('postpic', postCount)"
+                  />
                 </div>
-
+              </div>
             </form>
           </div>
 
@@ -363,14 +374,47 @@
       </div>
     </div>
 
-    <!-- For asking to delete the item -->
+    <!-- Modal for Asking if it would deletes an item -->
+
     <div
       class="modal fade"
-      id="questionToDelete"
+      id="confirmToDelete"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Delete a Feed Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the post?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary confirmDLTBtnColor">
+              Yes, delete the Item
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script
@@ -387,143 +431,176 @@
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-      import {getDatabase, set, ref, child, onValue, get, remove } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-      import { getStorage, ref as dbRef, uploadBytes, list, getDownloadURL, listAll } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
+      import {
+        getDatabase,
+        set,
+        ref,
+        child,
+        onValue,
+        get,
+        remove,
+      } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+      import {
+        getStorage,
+        ref as dbRef,
+        uploadBytes,
+        list,
+        getDownloadURL,
+        listAll,
+      } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
 
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAXTWA8tDgh36kHxr3oiI2mdZk4xN1ExIU",
-      authDomain: "coisprojectmain.firebaseapp.com",
-      projectId: "coisprojectmain",
-      storageBucket: "coisprojectmain.appspot.com",
-      messagingSenderId: "666040501925",
-      appId: "1:666040501925:web:a53d190dbffca2ceac2f4c",
-    };
+      // Initialize Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyAXTWA8tDgh36kHxr3oiI2mdZk4xN1ExIU",
+        authDomain: "coisprojectmain.firebaseapp.com",
+        projectId: "coisprojectmain",
+        storageBucket: "coisprojectmain.appspot.com",
+        messagingSenderId: "666040501925",
+        appId: "1:666040501925:web:a53d190dbffca2ceac2f4c",
+      };
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    const storage = getStorage(app);
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const storage = getStorage(app);
 
+      document.addEventListener("DOMContentLoaded", function () {
+        const createBrowseButton = document.querySelector(
+          ".admin-createbrowse-button"
+        );
+        const cardRow = document.querySelector(
+          ".row.row-cols-1.row-cols-md-3.g-4"
+        );
+        const dateTimeInput = document.getElementById("renderedService-when1");
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const createBrowseButton = document.querySelector(".admin-createbrowse-button");
-      const cardRow = document.querySelector(".row.row-cols-1.row-cols-md-3.g-4");
-      const dateTimeInput = document.getElementById('renderedService-when1');
+        // Reference to the posts collection in Firebase
+        const postsRef = ref(database, "posts");
 
-      // Reference to the posts collection in Firebase
-      const postsRef = ref(database, "posts");
+        // Declare formattedDateTime outside of the event listeners
+        let formattedDateTime;
 
-      // Declare formattedDateTime outside of the event listeners
-      let formattedDateTime;
+        // Event listener for changes in the input value
+        dateTimeInput.addEventListener("change", function () {
+          formattedDateTime = formatDateAndTime(this.value);
+          const formattedDateTimeElement =
+            document.getElementById("formattedDateTime");
+          formattedDateTimeElement.textContent = formattedDateTime;
+          console.log(formattedDateTime);
+        });
 
-      // Event listener for changes in the input value
-      dateTimeInput.addEventListener('change', function() {
-        formattedDateTime = formatDateAndTime(this.value);
-        const formattedDateTimeElement = document.getElementById('formattedDateTime');
-        formattedDateTimeElement.textContent = formattedDateTime;
-        console.log(formattedDateTime);
+        // Assuming createBrowseButton is declared somewhere in your code
+        createBrowseButton.addEventListener("click", async function () {
+          const titleInput = document.querySelector(
+            "#rendered-service-title1"
+          ).value;
+          const whereInput = document.querySelector(
+            "#renderedService-where1"
+          ).value;
+          const whenInput = formattedDateTime; // Now formattedDateTime is accessible here
+          const contentInput = document.querySelector(
+            "#rendered-service-content-text1"
+          ).value;
+          const processedText = processTextForFirebase(contentInput);
+
+          // Create an object to hold the post data
+          const postData = {
+            title: titleInput,
+            where: whereInput,
+            when: whenInput,
+            content: processedText,
+          };
+
+          if (titleInput && whenInput && contentInput) {
+            try {
+              // Get the current count of posts from Firebase
+              const snapshot = await get(postsRef);
+              const postCount = Object.keys(snapshot.val() || {}).length;
+
+              // Push data to Firebase with a unique post ID
+              await set(ref(database, `posts/post${postCount}`), postData);
+
+              alert("Posted successfully");
+              window.location.reload();
+
+              // Call the function to handle file selection
+              await chooseFile("postpic", postCount); // Wait for file upload to finish
+
+              location.reload(); // Reloading after uploading the file might not be necessary, consider removing
+            } catch (error) {
+              console.error("Error writing document: ", error);
+            }
+          } else {
+            alert("Please fill in all required fields");
+          }
+        });
+
+        // Function to handle the file selection
+        async function chooseFile(type, postCount) {
+          const fileInput = document.getElementById("renderservicefile");
+          const file = fileInput.files[0];
+
+          if (file) {
+            const storageRef = dbRef(
+              storage,
+              `posts/post${postCount}/${file.name}`
+            );
+            try {
+              const snapshot = await uploadBytes(storageRef, file);
+              console.log(
+                `File (${type}) uploaded successfully for post ${postCount}`
+              );
+
+              // You can get the download URL of the uploaded file here if needed
+              const downloadURL = await getDownloadURL(storageRef);
+              console.log("Download URL:", downloadURL);
+            } catch (error) {
+              console.error(
+                `Error uploading file (${type}) for post ${postCount}:`,
+                error
+              );
+            }
+          } else {
+            console.error(`No file selected for (${type})`);
+          }
+        }
       });
 
-    // Assuming createBrowseButton is declared somewhere in your code
-createBrowseButton.addEventListener("click", async function () {
-  const titleInput = document.querySelector("#rendered-service-title1").value;
-  const whereInput = document.querySelector("#renderedService-where1").value;
-  const whenInput = formattedDateTime; // Now formattedDateTime is accessible here
-  const contentInput = document.querySelector("#rendered-service-content-text1").value;
-  const processedText = processTextForFirebase(contentInput);
+      //////////// POST STATIC DISPLAY FROM FIREBASE
+      document.addEventListener("DOMContentLoaded", function () {
+        const database = getDatabase(app);
+        const postsRef = ref(database, "posts"); // Reference to the 'posts' node in Firebase
 
-  // Create an object to hold the post data
-  const postData = {
-    title: titleInput,
-    where: whereInput,
-    when: whenInput,
-    content: processedText,
-  };
+        // Fetch data from Firebase
+        onValue(postsRef, (snapshot) => {
+          const posts = snapshot.val(); // Retrieved posts from Firebase
 
-  if (titleInput && whenInput && contentInput) {
-    try {
-      // Get the current count of posts from Firebase
-      const snapshot = await get(postsRef);
-      const postCount = Object.keys(snapshot.val() || {}).length;
+          // Get the container where you want to display the posts
+          const cardContainer = document.querySelector(
+            ".row.row-cols-1.row-cols-md-3.g-4"
+          );
 
-      // Push data to Firebase with a unique post ID
-      await set(ref(database, `posts/post${postCount}`), postData);
+          // Function to format text content with line breaks and clickable links
+          function formatText(text) {
+            const formattedText = text
+              .split("\n")
+              .map((line) => {
+                if (line.match(/https?:\/\/[^\s]+/)) {
+                  return `<p>${linkify(line)}</p>`;
+                }
+                return `<p>${line}</p>`;
+              })
+              .join("");
 
-      alert("Posted successfully");
+            return formattedText;
+          }
 
-      // Call the function to handle file selection
-      await chooseFile('postpic', postCount); // Wait for file upload to finish
+          // Loop through the posts
+          for (const key in posts) {
+            const postData = posts[key]; // Retrieve individual post data
 
-      location.reload(); // Reloading after uploading the file might not be necessary, consider removing
-    } catch (error) {
-      console.error("Error writing document: ", error);
-    }
-      } else {
-        alert("Please fill in all required fields");
-      }
-    });
-
-    // Function to handle the file selection
-    async function chooseFile(type, postCount) {
-      const fileInput = document.getElementById('renderservicefile');
-      const file = fileInput.files[0];
-
-      if (file) {
-        const storageRef = dbRef(storage, `posts/post${postCount}/${file.name}`);
-        try {
-          const snapshot = await uploadBytes(storageRef, file);
-          console.log(`File (${type}) uploaded successfully for post ${postCount}`);
-
-          // You can get the download URL of the uploaded file here if needed
-          const downloadURL = await getDownloadURL(storageRef);
-          console.log('Download URL:', downloadURL);
-        } catch (error) {
-          console.error(`Error uploading file (${type}) for post ${postCount}:`, error);
-        }
-      } else {
-        console.error(`No file selected for (${type})`);
-      }
-    }
-
-});
-
-
-//////////// POST STATIC DISPLAY FROM FIREBASE
-    document.addEventListener("DOMContentLoaded", function () {
-      const database = getDatabase(app);
-      const postsRef = ref(database, 'posts'); // Reference to the 'posts' node in Firebase
-
-      
-      // Fetch data from Firebase
-      onValue(postsRef, (snapshot) => {
-        const posts = snapshot.val(); // Retrieved posts from Firebase
-
-        // Get the container where you want to display the posts
-        const cardContainer = document.querySelector('.row.row-cols-1.row-cols-md-3.g-4');
-
-      // Function to format text content with line breaks and clickable links
-        function formatText(text) {
-          const formattedText = text
-            .split('\n')
-            .map((line) => {
-              if (line.match(/https?:\/\/[^\s]+/)) {
-                return `<p>${linkify(line)}</p>`;
-              }
-              return `<p>${line}</p>`;
-            })
-            .join('');
-
-          return formattedText;
-        }
-        
-   // Loop through the posts
-    for (const key in posts) {
-          const postData = posts[key]; // Retrieve individual post data
-
-          // Create HTML elements dynamically and populate them with fetched data
-          const newCard = document.createElement('div');
-          newCard.className = 'col';
-          newCard.innerHTML = `
+            // Create HTML elements dynamically and populate them with fetched data
+            const newCard = document.createElement("div");
+            newCard.className = "col";
+            newCard.innerHTML = `
             <div class="card admin-browse-content1">
               <img src="../image-source/rendered-service-poster1.png" class="card-img-top rendered-service-poster1" alt="...">
               <div class="card-body">
@@ -531,143 +608,172 @@ createBrowseButton.addEventListener("click", async function () {
                 <p class="card-text admin-notif-text-render">${postData.when}</p>
                 <!-- Add other HTML elements here to display more data -->
                 <button type="button" class="btn btn-primary admin-notif-btn-render" data-bs-toggle="modal" data-bs-target="#staticBackdrop-content1" data-bs-content="${key}">View More Details</button>
-                <button type="button" class="btn btn-primary admin-button-delete-itemrendered" data-post-key="${key}" data-bs-toggle="modal" data-bs-target="#questionToDelete">
+                <button type="button" class="btn btn-primary admin-button-delete-itemrendered" data-post-key="${key}" data-bs-toggle="modal" data-bs-target="#confirmToDelete">
                   <i class="bx bx-trash"></i> Delete Item
                 </button>
               </div>
             </div>
           `;
-            
-          // Append the newly created card to the card container
-          cardContainer.appendChild(newCard);
-          // Call the function to update the profile picture
-          
+
+            // Append the newly created card to the card container
+            cardContainer.appendChild(newCard);
+            // Call the function to update the profile picture
 
             // Add event listener to the 'View More Details' button
-          newCard.querySelector('.admin-notif-btn-render').addEventListener('click', function() {
-            // Update modal content with Firebase data
-            document.getElementById('rendered-service-title').innerText = postData.title;
-            document.getElementById('rendered-service-content-text').innerHTML = postData.content; // You can set the content here
-            document.getElementById('renderedService-where').innerText = postData.where;
-            document.getElementById('renderedService-when').innerText = postData.when;
-            postPicture(key);
-          });
+            newCard
+              .querySelector(".admin-notif-btn-render")
+              .addEventListener("click", function () {
+                // Update modal content with Firebase data
+                document.getElementById("rendered-service-title").innerText =
+                  postData.title;
+                document.getElementById(
+                  "rendered-service-content-text"
+                ).innerHTML = postData.content; // You can set the content here
+                document.getElementById("renderedService-where").innerText =
+                  postData.where;
+                document.getElementById("renderedService-when").innerText =
+                  postData.when;
+                postPicture(key);
+              });
 
-          // Attach event listener to the delete button
-          const deleteButton = newCard.querySelector('.admin-button-delete-itemrendered');
-        deleteButton.addEventListener('click', function () {
-            const postKey = this.getAttribute('data-post-key');
+            // Attach event listener to the delete button
+            const deleteButton = newCard.querySelector(
+              ".admin-button-delete-itemrendered"
+            );
+            deleteButton.addEventListener("click", function () {
+              const postKey = this.getAttribute("data-post-key");
 
-            // Reference to the specific post node you want to delete
-            const postRef = ref(database, `posts/${postKey}`);
+              // Select the confirmation modal's 'Yes, delete' button
+              const confirmDeleteButton = document.querySelector(
+                ".confirmDLTBtnColor"
+              );
+              // Add a click event listener to the confirmation button
+              confirmDeleteButton.addEventListener("click", function () {
+                // Reference to the specific post node you want to delete
+                const postRef = ref(database, `posts/${postKey}`);
 
-            // Remove the post from the database
-            remove(postRef)
-              .then(() => {
-                location.reload();
-                alert(`Post deleted successfully.`);
-                // Optionally, add code here for any additional actions after deletion
+                // Remove the post from the database
+                remove(postRef)
+                  .then(() => {
+                    location.reload();
+                    alert(`Post deleted successfully.`);
+                    // Optionally, add code here for any additional actions after deletion
+                  })
+                  .catch((error) => {
+                    console.error(
+                      `Error deleting post ${postKey}: ${error.message}`
+                    );
+                  });
+              });
+            });
+
+            // Append the newly created card to the card container
+            cardContainer.appendChild(newCard);
+          }
+
+          function postPicture(number) {
+            console.log("post picture number", number);
+            const storageRef = dbRef(storage, `posts/${number}`);
+
+            listAll(storageRef)
+              .then((res) => {
+                if (res.items.length > 0) {
+                  // Sort items by their metadata (creation time)
+                  const sortedItems = res.items.sort(
+                    (a, b) => b.timeCreated - a.timeCreated
+                  );
+
+                  // Get the most recent item (first item after sorting)
+                  const mostRecentItem = sortedItems[0];
+
+                  // Fetch download URL for the most recent item
+                  getDownloadURL(mostRecentItem).then((url) => {
+                    const profilePic = document.getElementById(
+                      "rendered-image-reference-1"
+                    );
+                    profilePic.src = url;
+                  });
+                } else {
+                  console.error("No images found in the folder");
+                }
               })
               .catch((error) => {
-                console.error(`Error deleting post ${postKey}: ${error.message}`);
+                console.error("Error listing files:", error);
               });
-          });
-
-          // Append the newly created card to the card container
-          cardContainer.appendChild(newCard);
-        }
-
-
-        function postPicture(number) {
-        console.log("post picture number",number);
-        const storageRef = dbRef(storage, `posts/${number}`);
-
-        listAll(storageRef)
-          .then((res) => {
-            if (res.items.length > 0) {
-              // Sort items by their metadata (creation time)
-              const sortedItems = res.items.sort((a, b) => b.timeCreated - a.timeCreated);
-
-              // Get the most recent item (first item after sorting)
-              const mostRecentItem = sortedItems[0];
-
-              // Fetch download URL for the most recent item
-              getDownloadURL(mostRecentItem).then((url) => {
-                const profilePic = document.getElementById('rendered-image-reference-1');
-                profilePic.src = url;
-              });
-            } else {
-              console.error('No images found in the folder');
-            }
-          })
-          .catch((error) => {
-            console.error('Error listing files:', error);
-          });
-      }
+          }
+        });
       });
-    });
 
+      //////////////////////// Function to format the date and time
 
+      // Function to convert URLs in text to clickable links
+      function linkify(text) {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(
+          urlRegex,
+          (url) => `<a href="${url}" target="_blank">${url}</a>`
+        );
+      }
 
+      function processTextForFirebase(text) {
+        // Convert newlines to <br> tags
+        const textWithBr = text.replace(/\n/g, "<br>");
 
-//////////////////////// Function to format the date and time
+        // Convert URLs into clickable links and preserve spaces
+        const formattedText = textWithBr
+          .split("\n")
+          .map((line) => {
+            const lineWithLinks = line.match(/https?:\/\/[^\s]+/)
+              ? `<p>${linkify(line)}</p>`
+              : `<p>${line.replace(/ /g, "&nbsp;")}</p>`;
+            return lineWithLinks;
+          })
+          .join("");
 
-// Function to convert URLs in text to clickable links
-function linkify(text) {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      return text.replace(urlRegex, (url) => `<a href="${url}" target="_blank">${url}</a>`);
-    }
+        return formattedText;
+      }
 
-    function processTextForFirebase(text) {
-      // Convert newlines to <br> tags
-      const textWithBr = text.replace(/\n/g, '<br>');
+      //////////////////////// Function to format the date and time
+      function formatDateAndTime(datetime) {
+        const date = new Date(datetime);
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const month = monthNames[date.getMonth()];
+        const day = ("0" + date.getDate()).slice(-2);
+        const year = date.getFullYear();
+        let hours = date.getHours();
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+        const ampm = hours >= 12 ? "pm" : "am";
+        hours = hours % 12;
+        hours = hours ? hours : 12;
 
-      // Convert URLs into clickable links and preserve spaces
-      const formattedText = textWithBr
-        .split('\n')
-        .map((line) => {
-          const lineWithLinks = line.match(/https?:\/\/[^\s]+/)
-            ? `<p>${linkify(line)}</p>`
-            : `<p>${line.replace(/ /g, '&nbsp;')}</p>`;
-          return lineWithLinks;
-        })
-        .join('');
+        const formattedDateTime = `${month} ${day}, ${year} Time: ${hours}:${minutes}${ampm}`;
+        return formattedDateTime;
+      }
 
-      return formattedText;
-}
+      // Get the input element
+      const dateTimeInput = document.getElementById("renderedService-when1");
 
-
-//////////////////////// Function to format the date and time
-    function formatDateAndTime(datetime) {
-      const date = new Date(datetime);
-      const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July',
-        'August', 'September', 'October', 'November', 'December'
-      ];
-      const month = monthNames[date.getMonth()];
-      const day = ('0' + date.getDate()).slice(-2);
-      const year = date.getFullYear();
-      let hours = date.getHours();
-      const minutes = ('0' + date.getMinutes()).slice(-2);
-      const ampm = hours >= 12 ? 'pm' : 'am';
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-
-      const formattedDateTime = `${month} ${day}, ${year} Time: ${hours}:${minutes}${ampm}`;
-      return formattedDateTime;
-    }
-
-    // Get the input element
-    const dateTimeInput = document.getElementById('renderedService-when1');
-
-    // Event listener for changes in the input value
-    dateTimeInput.addEventListener('change', function() {
-      const formattedDateTime = formatDateAndTime(this.value);
-      const formattedDateTimeElement = document.getElementById('formattedDateTime');
-      formattedDateTimeElement.textContent = formattedDateTime;
-      console.log(formattedDateTime); 
-    });
-
+      // Event listener for changes in the input value
+      dateTimeInput.addEventListener("change", function () {
+        const formattedDateTime = formatDateAndTime(this.value);
+        const formattedDateTimeElement =
+          document.getElementById("formattedDateTime");
+        formattedDateTimeElement.textContent = formattedDateTime;
+        console.log(formattedDateTime);
+      });
     </script>
   </body>
 </html>
