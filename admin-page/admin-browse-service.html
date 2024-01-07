@@ -616,6 +616,7 @@
             );
             console.log(`Email sent to all recipients!`);
             alert("All valid emails sent successfully!");
+            location.reload();
           } catch (error) {
             console.error(`Failed to send email to all recipients:`, error);
             alert("Failed to send emails");

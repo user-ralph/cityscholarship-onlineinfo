@@ -73,7 +73,7 @@
             </a>
           </li>
           <li class="list">
-            <a href="admin-connect-admin.html" class="nav-link">
+            <a href="admin-notifications.html" class="nav-link">
               <i class="bx bx-notification icon"></i>
               <span class="link">Notifications</span>
             </a>
@@ -378,13 +378,14 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
-    </script>
-    
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+
     <script type="text/javascript">
-      (function(){
-          emailjs.init("LGwRLRAB3Qbxl-A1p");
+      (function () {
+        emailjs.init("LGwRLRAB3Qbxl-A1p");
       })();
     </script>
 
@@ -429,27 +430,36 @@
       const storage = getStorage(app);
       document.addEventListener("DOMContentLoaded", function () {
         const database = getDatabase(app);
-        const postsRef = ref(database, 'postannouncements');
-        const createBrowseButton = document.querySelector(".admin-createbrowse-button");
-      
+        const postsRef = ref(database, "postannouncements");
+        const createBrowseButton = document.querySelector(
+          ".admin-createbrowse-button"
+        );
+
         createBrowseButton.addEventListener("click", async function () {
-          const titleInput = document.querySelector("#rendered-service-title1").value;
-          const contentInput = document.querySelector("#rendered-service-content-text1").value;
+          const titleInput = document.querySelector(
+            "#rendered-service-title1"
+          ).value;
+          const contentInput = document.querySelector(
+            "#rendered-service-content-text1"
+          ).value;
           const processedText = processTextForFirebase(contentInput);
-      
+
           const postData = {
             title: titleInput,
             content: processedText,
           };
-      
+
           if (titleInput && contentInput) {
             try {
               const snapshot = await get(postsRef);
               const postCount = Object.keys(snapshot.val() || {}).length;
-      
-              await set(ref(database, `postannouncements/ann${postCount}`), postData);
+
+              await set(
+                ref(database, `postannouncements/ann${postCount}`),
+                postData
+              );
               alert("Posted successfully");
-      
+
               // Fetch user emails and send emails to all at once
               fetchUserEmailsAndSendEmail(postData);
             } catch (error) {
@@ -459,57 +469,65 @@
             alert("Please fill in all required fields");
           }
         });
-      
+
         async function fetchUserEmailsAndSendEmail(postData) {
-          const usersRef = ref(database, 'users');
-      
+          const usersRef = ref(database, "users");
+
           try {
             const snapshot = await get(usersRef);
             const users = snapshot.val();
-      
+
             if (users) {
               const userIds = Object.keys(users);
-              const userEmails = userIds.map(userId => users[userId].email).filter(isValidEmail);
-      
+              const userEmails = userIds
+                .map((userId) => users[userId].email)
+                .filter(isValidEmail);
+
               if (userEmails.length > 0) {
                 sendEmailToAll(postData, userEmails);
               } else {
-                console.log('No valid users found in the database');
+                console.log("No valid users found in the database");
               }
             } else {
-              console.log('No users found in the database');
+              console.log("No users found in the database");
             }
           } catch (error) {
-            console.error('Error fetching user emails:', error);
+            console.error("Error fetching user emails:", error);
           }
         }
-      
+
         async function sendEmailToAll(postData, userEmails) {
           const emailParams = {
             to_name: "ISDA Scholars",
             from_name: "City Scholarship Office",
-            message: "The City Scholarship Office has released a new announcement. Please visit https://cityscholarship-onlineinfo.netlify.app/ for further details",
-            bcc: userEmails.join(','), // BCC all emails at once 
+            message:
+              "The City Scholarship Office has released a new announcement. Please visit https://cityscholarship-onlineinfo.netlify.app/ for further details",
+            bcc: userEmails.join(","), // BCC all emails at once
             from_email: "dandasan.veejay7@gmail.com", // Replace with your email
           };
-      
+
           try {
-            await emailjs.send("service_eth3yyb1", "template_x3g9n1w", emailParams);
+            await emailjs.send(
+              "service_eth3yyb1",
+              "template_x3g9n1w",
+              emailParams
+            );
             console.log(`Email sent to all recipients!`);
             alert("All valid emails sent successfully!");
+            location.reload();
           } catch (error) {
             console.error(`Failed to send email to all recipients:`, error);
             alert("Failed to send emails");
           }
         }
-      
+
         // Function to validate email addresses
         function isValidEmail(email) {
           return /\S+@\S+\.\S+/.test(email);
         }
       });
 
-          /// DISPLAY
+      /// DISPLAY
       document.addEventListener("DOMContentLoaded", function () {
         const database = getDatabase(app);
         const postsRef = ref(database, "postannouncements");
@@ -615,37 +633,36 @@
         });
       });
 
-
       function fetchUserEmails() {
         const database = getDatabase(app);
-        const usersRef = ref(database, 'users'); // Reference to the 'users' node in Firebase
-      
+        const usersRef = ref(database, "users"); // Reference to the 'users' node in Firebase
+
         // Fetch data from Firebase
         onValue(usersRef, (snapshot) => {
           const users = snapshot.val(); // Retrieved users from Firebase
-      
+
           // Check if users exist
           if (users) {
             // Get all user IDs
             const userIds = Object.keys(users);
-      
+
             // Array to store user emails
             const userEmails = [];
-      
+
             // Retrieve emails for each user
             userIds.forEach((userId) => {
               const userEmail = users[userId].email; // Assuming 'email' is the field containing the email
               userEmails.push({ userId, email: userEmail });
             });
-      
+
             // Perform actions with userEmails array (or return it)
             console.log(userEmails); // For demonstration, you can modify this line to use the userEmails array as needed
           } else {
-            console.log('No users found in the database');
+            console.log("No users found in the database");
           }
         });
       }
-      
+
       // Call the function to fetch user emails
       fetchUserEmails();
 

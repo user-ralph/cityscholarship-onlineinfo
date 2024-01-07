@@ -158,19 +158,30 @@
           All Scholar List
         </div>
         <div class="card-body">
-          <table class="table table-hover table-bordered" id="scholarTable">
-            <thead>
-              <tr>
-                <th>Scholar Name</th>
-                <th>School</th>
-                <th>Program</th>
-                <th>Status</th>
-                <th>Message</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-          </table>
+          <div class="table-responsive">
+            <!-- Add a row for search input -->
+            <div class="mb-3">
+              <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Search..."
+              />
+            </div>
+            <table class="table table-hover table-bordered" id="scholarTable">
+              <thead>
+                <tr>
+                  <th>Scholar Name</th>
+                  <th>School</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                  <th>Message</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </main>
@@ -335,59 +346,104 @@
         let alertShown = false;
         const tableBody = document.getElementById("tableBody");
 
+        // Ensure the DOM is loaded before getting the search input
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+          searchInput.addEventListener("keyup", searchTable);
+        } else {
+          console.error("Search input not found!");
+        }
+
         // Fetch data from Firebase collection (assuming 'users' is your collection)
         const usersRef = dbRef(database, "users");
 
         get(usersRef)
           .then((snapshot) => {
+            const users = [];
             if (snapshot.exists()) {
               snapshot.forEach((childSnapshot) => {
                 const data = childSnapshot.val();
-                // Populate table rows dynamically
+                data.key = childSnapshot.key;
+                data.timestamp = data.timestamp || 0; // Set default timestamp if not available
+                users.push(data);
+              });
+
+              // Sort users based on the most recent timestamp in descending order
+              users.sort((a, b) => b.timestamp - a.timestamp);
+
+              // Clear the table before repopulating it
+              tableBody.innerHTML = "";
+
+              // Display the most recent timestamp
+              const mostRecentTimestamp =
+                users.length > 0
+                  ? new Date(users[0].timestamp).toLocaleString()
+                  : "";
+
+              // Add a row at the top of the table for the most recent timestamp
+              const timestampRow = document.createElement("tr");
+              timestampRow.innerHTML = `
+                <td colspan="6" class="most-recent-timestamp">Most Recent Timestamp: ${mostRecentTimestamp}</td>
+              `;
+              tableBody.appendChild(timestampRow);
+
+              // Populate table rows based on the sorted users
+              users.forEach((data) => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                      <td>${data.firstname} ${data.middlename} ${
-                  data.lastname
-                }</td>
-                      <td>${data.school}</td>
-                      <td>${data.program}</td>
-                      <td>
-                        <select class="form-select status-dropdown" data-uid="${
-                          childSnapshot.key
-                        }">
-                          <option value="Passed" ${
-                            data.status === "Passed" ? "selected" : ""
-                          }>Passed</option>
-                          <option value="Failed" ${
-                            data.status === "Failed" ? "selected" : ""
-                          }>Failed</option>
-                          <option value="Pending" ${
-                            data.status === "Pending" ? "selected" : ""
-                          }>Pending</option>
-                        </select>
-                      </td>
-                      <td>
-                        
-                        <button
-                          type="button"
-                          class="btn btn-primary admin-message-button" 
-                          data-bs-toggle="modal"
-                        >
-                          Message
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn btn-primary admin-verify-button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#viewContentModel"
-                        >
-                          Verify
-                        </button>
-                      </td>
-                    `;
+                  <td>${data.firstname} ${data.middlename} ${data.lastname}</td>
+                  <td>${data.school}</td>
+                  <td>${data.program}</td>
+                  <td>
+                    <select class="form-select status-dropdown" data-uid="${
+                      data.key
+                    }">
+                      <option value="Passed" ${
+                        data.status === "Passed" ? "selected" : ""
+                      }>Passed</option>
+                      <option value="Failed" ${
+                        data.status === "Failed" ? "selected" : ""
+                      }>Failed</option>
+                      <option value="Pending" ${
+                        data.status === "Pending" ? "selected" : ""
+                      }>Pending</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-primary admin-message-button" data-bs-toggle="modal">Message</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-primary admin-verify-button" data-bs-toggle="modal" data-bs-target="#viewContentModel">Verify</button>
+                  </td>
+                `;
                 tableBody.appendChild(row);
+
+                // Add event listener to the status dropdown
+                const statusDropdown = row.querySelector(".status-dropdown");
+                updateDropdownColor(statusDropdown); // Initial call to set the dropdown color
+                statusDropdown.addEventListener("change", (event) => {
+                  const selectedStatus = event.target.value;
+                  const userKey = event.target.dataset.uid;
+                  // Update the status and timestamp in Firebase database when the dropdown value changes
+                  set(
+                    child(dbRef(database, `users/${userKey}`), "status"),
+                    selectedStatus
+                  )
+                    .then(() => {
+                      // Update timestamp along with the status
+                      set(
+                        child(dbRef(database, `users/${userKey}`), "timestamp"),
+                        new Date().getTime()
+                      );
+                      console.log("Status updated successfully");
+                      location.reload();
+                      updateDropdownColor(statusDropdown); // Update dropdown color after selection change
+                      updateMostRecentTimestamp(); // Update the most recent timestamp after status update
+                    })
+                    .catch((error) => {
+                      console.error("Error updating status: ", error);
+                    });
+                });
 
                 const messageButtons = document.querySelectorAll(
                   ".admin-message-button"
@@ -402,26 +458,6 @@
                     // Navigate to admin-connect-admin.html passing the userId as a query parameter
                     window.location.href = `admin-connect-admin.html?uid=${userId}`;
                   });
-                });
-
-                // Add event listener to the status dropdown
-                const statusDropdown = row.querySelector(".status-dropdown");
-                updateDropdownColor(statusDropdown); // Initial call to set the dropdown color
-                statusDropdown.addEventListener("change", (event) => {
-                  const selectedStatus = event.target.value;
-                  const userKey = event.target.dataset.uid;
-                  // Update the status in Firebase database when the dropdown value changes
-                  set(
-                    child(dbRef(database, `users/${userKey}`), "status"),
-                    selectedStatus
-                  )
-                    .then(() => {
-                      console.log("Status updated successfully");
-                      updateDropdownColor(statusDropdown); // Update dropdown color after selection change
-                    })
-                    .catch((error) => {
-                      console.error("Error updating status: ", error);
-                    });
                 });
 
                 const verifyButtons = document.querySelectorAll(
@@ -538,18 +574,10 @@
                   });
                 });
               });
-
-              // Initialize DataTables
-              $("#scholarTable").DataTable({
-                order: [[0, "asc"]], // Sort by the first column (Scholar Name)
-                paging: true, // Enable pagination
-                searching: true, // Enable search functionality
-              });
             } else {
               console.log("No data available");
             }
           })
-
           .catch((error) => {
             console.error("Error fetching documents: ", error);
           });
@@ -567,6 +595,62 @@
             dropdown.classList.remove("active-status");
             dropdown.classList.remove("inactive-status");
             dropdown.classList.add("pending-status");
+          }
+        }
+
+        function updateMostRecentTimestamp() {
+          // Fetch the latest data and update the most recent timestamp display
+          get(usersRef)
+            .then((snapshot) => {
+              const users = [];
+              if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                  const data = childSnapshot.val();
+                  data.timestamp = data.timestamp || 0;
+                  users.push(data);
+                });
+                users.sort((a, b) => b.timestamp - a.timestamp);
+                const mostRecentTimestamp =
+                  users.length > 0
+                    ? new Date(users[0].timestamp).toLocaleString()
+                    : "";
+                const timestampRow = document.querySelector(
+                  ".most-recent-timestamp"
+                );
+                if (timestampRow) {
+                  timestampRow.textContent = `Most Recent Timestamp: ${mostRecentTimestamp}`;
+                }
+              }
+            })
+            .catch((error) => {
+              console.error("Error updating most recent timestamp: ", error);
+            });
+        }
+
+        function searchTable() {
+          const input = document.getElementById("searchInput");
+          const filter = input.value.toUpperCase();
+          const table = document.getElementById("scholarTable");
+          const tbody = table.getElementsByTagName("tbody");
+          const tr = tbody[0].getElementsByTagName("tr");
+
+          for (let i = 0; i < tr.length; i++) {
+            const tdName = tr[i].getElementsByTagName("td")[0]; // Change index to match the column where the name is
+            const tdStatus = tr[i].querySelector(".status-dropdown"); // Get the status dropdown element
+
+            if (tdName && tdStatus) {
+              const txtValueName = tdName.textContent || tdName.innerText;
+              const selectedStatus = tdStatus.value.toUpperCase(); // Get the selected status from the dropdown
+
+              if (
+                txtValueName.toUpperCase().indexOf(filter) > -1 || // Check against the name
+                selectedStatus.indexOf(filter) > -1 // Check against the selected status
+              ) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
           }
         }
       });
