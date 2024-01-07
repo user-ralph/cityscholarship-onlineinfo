@@ -765,6 +765,7 @@
                 type="file"
                 id="formFileServices"
                 accept="image/*"
+                required
                 onchange="chooseFile('services')"
               />
             </div>
@@ -779,6 +780,7 @@
                 type="file"
                 id="formFileGrades"
                 accept="image/*"
+                required
                 onchange="chooseFile('grades')"
               />
             </div>
@@ -814,6 +816,35 @@
           registrar for further assistance.
         </div>
       </div>
+
+      <!-- Alert Toast stating to upload only Image File -->
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div
+          id="imageFileToast"
+          class="toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div class="toast-header">
+            <img
+              src="../image-source/OIS-logo.svg"
+              class="rounded me-2 reminderMessage"
+              alt="..."
+            />
+            <strong class="me-auto">City Scholarship Office</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="toast-body reminderContent">
+            Please upload only image files.
+          </div>
+        </div>
+      </div>
     </main>
 
     <script
@@ -821,6 +852,28 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      // Function to validate file type and display Bootstrap toast
+      function validateFileType(inputId) {
+        const fileInput = document.getElementById(inputId);
+        const imageFileToast = new bootstrap.Toast(
+          document.getElementById("imageFileToast")
+        );
+
+        fileInput.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file.type.startsWith("image/")) {
+            imageFileToast.show();
+            fileInput.value = ""; // Clear the file input
+          }
+        });
+      }
+
+      // Call the validation function for both file inputs
+      validateFileType("formFileServices");
+      validateFileType("formFileGrades");
+    </script>
 
     <script type="module">
       // Import the necessary Firebase functions
